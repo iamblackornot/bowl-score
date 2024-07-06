@@ -12,6 +12,7 @@ import {useMediaQuery} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
 import IPlayer from "../models/IPlayer";
 import {useCreateGame} from "../hooks/Game";
+import ErrorNotification from "../components/ErrorNotification";
 
 export interface ConfirmationDialogRawProps {
     open: boolean;
@@ -23,6 +24,7 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
     const game = useCreateGame();
+    const [error, setError] = React.useState(true);
 
     const onTeamPlayerAdd = (teamIndex: number, player: IPlayer | null) => {
         if (player) {
@@ -87,23 +89,26 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
     };
 
     return (
-        <Dialog
-            sx={{"& .MuiDialog-paper": {width: "100%"}}}
-            maxWidth="xs"
-            fullScreen={fullScreen}
-            open={open}
-            scroll={"body"}
-        >
-            <DialogTitle>Phone Ringtone</DialogTitle>
-            {generateTeamSelectionList()}
-            <DialogActions>
-                <Button variant="outlined" autoFocus onClick={handleCancel}>
-                    Cancel
-                </Button>
-                <Button variant="contained" onClick={handleOk}>
-                    Confirm
-                </Button>
-            </DialogActions>
-        </Dialog>
+        <>
+            <Dialog
+                sx={{"& .MuiDialog-paper": {width: "100%"}}}
+                maxWidth="xs"
+                fullScreen={fullScreen}
+                open={open}
+                scroll={"body"}
+            >
+                <DialogTitle>Set up new game</DialogTitle>
+                {generateTeamSelectionList()}
+                <DialogActions>
+                    <Button variant="outlined" autoFocus onClick={handleCancel}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" onClick={handleOk}>
+                        Confirm
+                    </Button>
+                </DialogActions>
+                <ErrorNotification opened={error} message="shock" onClose={() => setError(false)} />
+            </Dialog>
+        </>
     );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import Autocomplete, {AutocompleteRenderInputParams, createFilterOptions} from "@mui/material/Autocomplete";
 import IPlayer from "../models/IPlayer";
 import {Alert, Button, CircularProgress, FilterOptionsState, Stack, TextField} from "@mui/material";
-import AddNewPlayerDialog from "../dialogs/AddNewPlayer/AddNewPlayerDialog";
+import AddNewPlayerDialog from "../dialogs/AddNewPlayerDialog";
 import usePlayers from "../hooks/Players";
 
 export type PlayerSelectProps = {
