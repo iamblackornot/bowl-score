@@ -1,4 +1,3 @@
-import React from "react";
 import IPlayer from "../models/IPlayer";
 
 import {useData} from "./Data";

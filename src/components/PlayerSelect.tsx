@@ -16,7 +16,7 @@ const PlayerSelect: React.FC<PlayerSelectProps> = (props: PlayerSelectProps) => 
     const [newPlayerName, setNewPlayerName] = React.useState("");
     const [value, setValue] = React.useState<IPlayer | null>(null);
 
-    const onChange = (event: React.SyntheticEvent<Element, Event>, newValue: string | IPlayer | null) => {
+    const onChange = (_event: React.SyntheticEvent<Element, Event>, newValue: string | IPlayer | null) => {
         if (typeof newValue === "string") {
             // timeout to avoid instant validation of the dialog's form.
             setTimeout(() => {

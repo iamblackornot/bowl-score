@@ -30,7 +30,7 @@ const groupStyle = {
 };
 
 const ToggleSelect = <T,>(props: GameTypeSelectProps<T>) => {
-    const onGameTypeChanged = (event: React.MouseEvent<HTMLElement>, value: T) => {
+    const onGameTypeChanged = (_event: React.MouseEvent<HTMLElement>, value: T) => {
         if (value !== null) {
             props.OnValueChanged(value);
         }

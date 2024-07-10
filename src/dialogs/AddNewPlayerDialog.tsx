@@ -1,6 +1,6 @@
 "use client";
 import React, {useEffect} from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 
 export type AddNewPlayerDialogProps = {
     isOpen: boolean;
