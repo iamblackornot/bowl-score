@@ -25,46 +25,5 @@ export default function usePlayers() {
         return newPlayer;
     }
 
-    React.useEffect(() => {
-        loadPlayers();
-    }, []);
-
-    return {players: data, loading, error, addPlayer};
+    return {data, loading, error, addPlayer, loadPlayers};
 }
-
-// export function usePlayers() {
-//     const [players, setPlayers] = React.useState<IPlayer[]>([]);
-//     const [loading, setLoading] = React.useState(false);
-
-//     const error = useError();
-
-//     async function loadPlayers() {
-//         try {
-//             setLoading(true);
-//             const res = await axios.get<IPlayer[]>("http://localhost:3111/players");
-//             //console.log(res);
-
-//             setPlayers(res.data);
-//             setLoading(false);
-//         } catch (err) {
-//             let errMessage = "network error";
-
-//             if (axios.isAxiosError(err)) {
-//                 const axiosError = err as AxiosError;
-//                 errMessage = `${axiosError.message}`;
-//             }
-
-//             setPlayers([]);
-//             error.toggleActive(true);
-//             error.setErrorMessage(`Failed to load players: ${errMessage}`);
-//         } finally {
-//             setLoading(false);
-//         }
-//     }
-
-//     React.useEffect(() => {
-//         loadPlayers();
-//     }, []);
-
-//     return {players, loading, loadPlayers, error};
-// }

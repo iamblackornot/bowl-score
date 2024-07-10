@@ -18,7 +18,7 @@ function App() {
                     handleOpen();
                 }}
             >
-                Click me
+                New game
             </Button>
             <CreateGameDialog key="create_game_dlg" open={open} onClose={handleClose} />
         </>

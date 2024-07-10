@@ -1,13 +1,17 @@
 import React from "react";
 import PlayerSelect from "./PlayerSelect";
 import IPlayer from "../models/IPlayer";
-import {Grid, IconButton, List, ListItem, ListItemText} from "@mui/material";
+import {Grid, IconButton, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {Person} from "@mui/icons-material";
 
 export type TeamSelectProps = {
     index: number;
-    players: IPlayer[];
-    playersAlreadySelected: Set<number>;
+    loading: boolean;
+    isFull: boolean;
+    availablePlayers: IPlayer[];
+    selectedPlayers: IPlayer[];
+    onNewPlayerCreate: (name: string) => Promise<IPlayer | null>;
     onPlayerAdd: (teamIndex: number, player: IPlayer | null) => void;
     onPlayerRemove: (teamIndex: number, player: IPlayer) => void;
 };
@@ -22,6 +26,9 @@ function generateList(players: IPlayer[], props: TeamSelectProps) {
                 </IconButton>
             }
         >
+            <ListItemIcon>
+                <Person />
+            </ListItemIcon>
             <ListItemText primary={player.name} />
         </ListItem>
     ));
@@ -30,14 +37,17 @@ function generateList(players: IPlayer[], props: TeamSelectProps) {
 const TeamSelect: React.FC<TeamSelectProps> = (props: TeamSelectProps) => {
     return (
         <>
-            <PlayerSelect
-                onPlayerAdd={(player: IPlayer | null) => props.onPlayerAdd(props.index, player)}
-                playersAlreadySelected={props.playersAlreadySelected}
-            />
-            {/* <TeamList players={props.players} onPlayerRemove={props.onPlayerRemove} /> */}
             <Grid item xs={12} md={6}>
-                <List> {generateList(props.players, props)} </List>
+                <List> {generateList(props.selectedPlayers, props)} </List>
             </Grid>
+            {!props.isFull && (
+                <PlayerSelect
+                    onPlayerAdd={(player: IPlayer | null) => props.onPlayerAdd(props.index, player)}
+                    onNewPlayerCreate={async (name: string) => await props.onNewPlayerCreate(name)}
+                    players={props.availablePlayers}
+                    loading={props.loading}
+                />
+            )}
         </>
     );
 };

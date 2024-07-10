@@ -3,7 +3,7 @@ import useError from "./Error";
 import Result from "../database/result";
 
 export function useData<T>() {
-    const [data, setData] = React.useState<T | null>();
+    const [data, setData] = React.useState<T | null>(null);
     const [loading, setLoading] = React.useState(false);
 
     const error = useError();

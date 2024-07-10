@@ -37,9 +37,8 @@ const AddNewPlayerDialog: React.FC<AddNewPlayerDialogProps> = ({
     return (
         <Dialog open={isOpen} onClose={handleClose}>
             <form onSubmit={handleSubmit}>
-                <DialogTitle>Add a new player</DialogTitle>
+                <DialogTitle>Add a new player to database</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>Did you miss any film in our list? Please, add it!</DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -52,8 +51,12 @@ const AddNewPlayerDialog: React.FC<AddNewPlayerDialogProps> = ({
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit">Add</Button>
+                    <Button variant="outlined" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" type="submit">
+                        Add
+                    </Button>
                 </DialogActions>
             </form>
         </Dialog>
