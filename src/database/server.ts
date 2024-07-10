@@ -13,12 +13,19 @@ class ServerDataProvider implements IDataProvider {
     }
 
     public async getPlayers(): Promise<Result<IPlayer[]>> {
-        const requestMethod = async () => await axios.get<IPlayer[]>(`${this.getServerAddress()}/players`);
+        const requestMethod = async () =>
+            await axios.get<IPlayer[]>(`${this.getServerAddress()}/players`, {withCredentials: true});
         return await this.request(requestMethod);
     }
 
     public async addPlayer(name: string): Promise<Result<IPlayer>> {
         const requestMethod = async () => await axios.post<IPlayer>(`${this.getServerAddress()}/players/add`, {name});
+        return await this.request(requestMethod);
+    }
+
+    public async sendError(message: string): Promise<Result<null>> {
+        const requestMethod = async () =>
+            await axios.post(`${this.getServerAddress()}/log`, {message}, {withCredentials: true});
         return await this.request(requestMethod);
     }
 
@@ -31,6 +38,12 @@ class ServerDataProvider implements IDataProvider {
             const res = await request_func();
             return new Result(true, res.data);
         } catch (err) {
+            try {
+                await axios.post(`${this.getServerAddress()}/log`, {message: err}, {withCredentials: true});
+            } catch (_err) {
+                console.log(err);
+            }
+
             let errMessage = "network error";
 
             if (axios.isAxiosError(err)) {
