@@ -13,8 +13,7 @@ class ServerDataProvider implements IDataProvider {
     }
 
     public async getPlayers(): Promise<Result<IPlayer[]>> {
-        const requestMethod = async () =>
-            await axios.get<IPlayer[]>(`${this.getServerAddress()}/players`, {withCredentials: true});
+        const requestMethod = async () => await axios.get<IPlayer[]>(`${this.getServerAddress()}/players`);
         return await this.request(requestMethod);
     }
 
@@ -24,8 +23,7 @@ class ServerDataProvider implements IDataProvider {
     }
 
     public async sendError(message: string): Promise<Result<null>> {
-        const requestMethod = async () =>
-            await axios.post(`${this.getServerAddress()}/log`, {message}, {withCredentials: true});
+        const requestMethod = async () => await axios.post(`${this.getServerAddress()}/log`, {message});
         return await this.request(requestMethod);
     }
 

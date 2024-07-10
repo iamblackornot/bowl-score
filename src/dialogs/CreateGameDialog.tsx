@@ -56,7 +56,7 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
     const players = usePlayers();
 
     React.useEffect(() => {
-        if (open && players.data === null) {
+        if (open && players.data === null && !players.loading) {
             players.loadPlayers();
         }
     }, [open, players]);
