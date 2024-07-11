@@ -230,6 +230,8 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
 
     const onConfirmModalConfirm = () => {
         setConfirmModalOpen(false);
+        game.reset();
+        onClose();
     };
 
     const onConfirmModalCancel = () => {
