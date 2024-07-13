@@ -6,6 +6,7 @@ import CreateGameDialog from "./dialogs/CreateGameDialog";
 import Scoreboard, {Scoreboard2} from "./components/scoreboard/Scoreboard";
 import SimpleContainer from "./components/scoreboard/SimpleContainer";
 import ResponsiveGrid from "./components/scoreboard/ResponsiveGrid";
+import EndColumn from "./components/scoreboard/EndColumn";
 
 function App() {
     const [open, setOpen] = useState(false);
@@ -23,8 +24,9 @@ function App() {
                 New game
             </Button>
             <CreateGameDialog key="create_game_dlg" open={open} onClose={handleClose} /> */}
-            <Stack direction="row" spacing={0.25}>
+            <Stack direction="row">
                 <Scoreboard />
+                <EndColumn />
                 <Scoreboard2 />
             </Stack>
             {/* <SimpleContainer /> */}

@@ -78,7 +78,7 @@ export type EndItemProps = {
 export const EndItem: React.FC<TextItemProps> = (props: TextItemProps) => {
     return (
         // <GridItem sx={{backgroundColor: blue[400], color: "#fff", width: "6rem"}}>
-        <GridItem sx={{backgroundColor: blue[400], color: "#fff", height: {}, width: "fit-content"}}>
+        <GridItem sx={{backgroundColor: blue[400], color: "#fff", height: "100%", alignItems: "center"}}>
             <Typography variant="h6">{props.text}</Typography>
         </GridItem>
     );
