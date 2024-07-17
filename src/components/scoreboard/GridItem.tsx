@@ -2,13 +2,14 @@ import * as React from "react";
 import {Box, Typography, useMediaQuery} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import {blue} from "@mui/material/colors";
+import useMedia from "../../hooks/Media";
 
 const addVerticalTextOrientation = (style: object) => {
     return {...style, writingMode: "vertical-rl", maxHeight: "12.5rem", textAlight: "start"};
 };
 
 export const GridItem = styled(Box)(({theme}) => {
-    const isSmallScreen = useMediaQuery("(max-width:420px)");
+    const {isSmallScreen} = useMedia();
     return {
         backgroundColor: "#fff",
         padding: theme.spacing(isSmallScreen ? 0.5 : 1),
@@ -38,9 +39,10 @@ export const PlayerItem: React.FC<TextItemProps> = (props: TextItemProps) => {
         overflow: "hidden",
         whiteSpace: "nowrap",
         height: "100%",
+        // width: "100%",
     };
 
-    const isSmallScreen = useMediaQuery("(max-width:420px)");
+    const {isSmallScreen} = useMedia();
 
     return (
         <GridItem>
@@ -53,16 +55,18 @@ export const PlayerItem: React.FC<TextItemProps> = (props: TextItemProps) => {
 
 export type ScoreItemProps = {
     end: number;
-    value: number;
+    value: number | null;
 };
 
 export const ScoreItem: React.FC<ScoreItemProps> = (props: ScoreItemProps) => {
+    const {isSmallScreen} = useMedia();
+
     return (
         // <GridItem sx={{backgroundColor: props.end % 2 ? blueGrey[100] : blueGrey[50]}}>
         // <GridItem sx={{backgroundColor: props.end % 2 ? blue[50] : blue[100]}}>
         // <GridItem sx={{backgroundColor: props.end % 2 ? "#e5f7ff" : "#f0f0f0", maxWidth: "3rem"}}>
-        <GridItem sx={{backgroundColor: props.end % 2 ? "#e5f7ff" : "#f0f0f0"}}>
-            <Typography variant="h4">{props.value}</Typography>
+        <GridItem sx={{backgroundColor: props.end % 2 ? "#f0f0f0" : "#e5f7ff"}}>
+            <Typography variant={isSmallScreen ? "h5" : "h4"}>{props.value ?? ""}</Typography>
         </GridItem>
     );
 };
@@ -84,10 +88,42 @@ export const EndItem: React.FC<TextItemProps> = (props: TextItemProps) => {
     );
 };
 
-export const TransparentItem: React.FC = () => {
+// export const TransparentItem: React.FC = () => {
+//     return (
+//         <GridItem sx={{opacity: "0", display: "flex", padding: "0"}}>
+//             <EndItem text="0"></EndItem>
+//         </GridItem>
+//     );
+// };
+
+export const EndFakeHeader: React.FC = () => {
     return (
-        <GridItem sx={{opacity: "0", display: "flex", padding: "0"}}>
-            <EndItem text="0"></EndItem>
+        <GridItem
+            //sx={{backgroundColor: blue[400], color: blue[400], height: "fit-content", minWidth: "2rem"}}
+            sx={{backgroundColor: blue[400], color: "#fff", height: "fit-content", minWidth: "2.5rem"}}
+        >
+            <Typography variant="h5">●</Typography>
+        </GridItem>
+    );
+};
+
+export const EndFakePlayer: React.FC = () => {
+    const styles = {
+        maxHeight: "1.75rem",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        height: "100%",
+        // width: "100%",
+        //backgr
+    };
+
+    const isSmallScreen = useMediaQuery("(max-width:420px)");
+
+    return (
+        <GridItem>
+            <Typography sx={isSmallScreen ? addVerticalTextOrientation(styles) : styles} variant="h6">
+                1
+            </Typography>
         </GridItem>
     );
 };

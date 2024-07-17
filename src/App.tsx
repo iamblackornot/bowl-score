@@ -1,34 +1,26 @@
 import {useState} from "react";
 
 import "./App.css";
-import {Button, Stack} from "@mui/material";
 import CreateGameDialog from "./dialogs/CreateGameDialog";
-import Scoreboard, {Scoreboard2} from "./components/scoreboard/Scoreboard";
-import SimpleContainer from "./components/scoreboard/SimpleContainer";
-import ResponsiveGrid from "./components/scoreboard/ResponsiveGrid";
-import EndColumn from "./components/scoreboard/EndColumn";
+import RegularScoreboardDemo1 from "./dialogs/RegularScoreboardDemo1";
+import {Button, Stack} from "@mui/material";
 
 function App() {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [openCreate, setOpenCreate] = useState(false);
+    const [openScoredboard1, setOpenScoredboard1] = useState(false);
 
     return (
         <>
-            {/* <Button
-                variant="contained"
-                onClick={() => {
-                    handleOpen();
-                }}
-            >
-                New game
+            <Button key="create_game_dlg" variant="contained" onClick={() => setOpenCreate(true)}>
+                Create game
             </Button>
-            <CreateGameDialog key="create_game_dlg" open={open} onClose={handleClose} /> */}
-            <Stack direction="row">
-                <Scoreboard />
-                <EndColumn />
-                <Scoreboard2 />
-            </Stack>
+            <CreateGameDialog open={openCreate} onClose={() => setOpenCreate(false)} />
+
+            <Button key="scoreboard_demo_1" variant="contained" onClick={() => setOpenScoredboard1(true)}>
+                Scoreboard v1
+            </Button>
+            <RegularScoreboardDemo1 open={openScoredboard1} onClose={() => setOpenScoredboard1(false)} />
+
             {/* <SimpleContainer /> */}
             {/* <SimpleContainer /> */}
             {/* <ResponsiveGrid /> */}
