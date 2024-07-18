@@ -21,8 +21,9 @@ const EndColumn2: React.FC<EndColumnProps2> = (props: EndColumnProps2) => {
             }}
         >
             <Stack spacing={0.25} sx={{height: "100%", width: "100%"}}>
-                {[...Array(props.ends).keys()].map((value: number) => (
-                    <EndItem2 key={`end_item_${value}`} text={value.toString()} />
+                <EndItem2 key={`end_item_0}`} text="H" />
+                {[...Array(props.ends - 1).keys()].map((value: number) => (
+                    <EndItem2 key={`end_item_${value + 1}`} text={(value + 1).toString()} />
                 ))}
             </Stack>
         </Box>

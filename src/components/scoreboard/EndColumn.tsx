@@ -66,8 +66,9 @@ const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
                         backgroundColor: "#fff",
                     }}
                 >
-                    {[...Array(props.ends).keys()].map((value: number) => (
-                        <EndItem key={`end_item_${value}`} text={value.toString()} />
+                    <EndItem key={`end_item_0}`} text="H" />
+                    {[...Array(props.ends - 1).keys()].map((value: number) => (
+                        <EndItem key={`end_item_${value + 1}`} text={(value + 1).toString()} />
                     ))}
                 </Stack>
             </Stack>
