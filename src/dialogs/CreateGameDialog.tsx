@@ -182,7 +182,7 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
     const getNewGameSummaryContent = () => {
         const elements: JSX.Element[] = [];
 
-        elements.push(<ListItemText key="game_mode" primary="Game mode" secondary={GameType[game.type]} />);
+        elements.push(<ListItemText key="game_mode" primary="Game format" secondary={GameType[game.type]} />);
         elements.push(<Divider key="divider_game_mode" />);
         elements.push(<ListItemText key="ends_count" primary="Ends count" secondary={game.ends} />);
         elements.push(<Divider key="divider_ends_count" />);
@@ -274,7 +274,7 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
             <DialogContent dividers>
                 <Stack direction={"column"} spacing={2}>
                     <ToggleSelect
-                        label="game mode"
+                        label="game format"
                         options={generateTypeOptions()}
                         value={game.type}
                         OnValueChanged={OnGameTypeChanged}

@@ -39,7 +39,7 @@ class ServerDataProvider implements IDataProvider {
             try {
                 await axios.post(`${this.getServerAddress()}/log`, {message: err}, {withCredentials: true});
             } catch (_err) {
-                console.log(err);
+                //console.log(err);
             }
 
             let errMessage = "network error";

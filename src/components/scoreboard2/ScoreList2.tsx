@@ -1,15 +1,16 @@
 import {Box} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React from "react";
-import {ScoreItem} from "./GridItem";
+import {ScoreItem2} from "./GridItem2";
+import {blue} from "@mui/material/colors";
 
-export type ScoreListProps = {
+export type ScoreListProps2 = {
     scores: number[];
     ends: number;
     enableTotalScoreCol: boolean | null;
 };
 
-const ScoreList: React.FC<ScoreListProps> = (props: ScoreListProps) => {
+const ScoreList2: React.FC<ScoreListProps2> = (props: ScoreListProps2) => {
     const partialSum: number[] = [];
 
     if (props.enableTotalScoreCol) {
@@ -21,16 +22,16 @@ const ScoreList: React.FC<ScoreListProps> = (props: ScoreListProps) => {
     }
 
     return (
-        <Box sx={{bgcolor: "#fff"}}>
-            <Grid container spacing={0.5}>
+        <Box sx={{bgcolor: blue[100], width: "100%"}}>
+            <Grid container spacing={0.25}>
                 {props.scores.map((score: number, index: number) => (
                     <React.Fragment key={`score_${index}`}>
                         <Grid xs={props.enableTotalScoreCol ? 6 : 12}>
-                            <ScoreItem end={index} value={score} />
+                            <ScoreItem2 end={index} value={score} />
                         </Grid>
                         {props.enableTotalScoreCol && (
                             <Grid xs={6}>
-                                <ScoreItem end={index} value={partialSum[index]} />
+                                <ScoreItem2 end={index} value={partialSum[index]} />
                             </Grid>
                         )}
                     </React.Fragment>
@@ -40,4 +41,4 @@ const ScoreList: React.FC<ScoreListProps> = (props: ScoreListProps) => {
     );
 };
 
-export default ScoreList;
+export default ScoreList2;

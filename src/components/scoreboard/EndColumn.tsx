@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Box, Grid, Stack} from "@mui/material";
-import {EndFakeHeader, EndFakePlayer, EndItem, PlayerItem, ScoreItem, TeamHeader} from "./GridItem";
+import {Grid, Stack} from "@mui/material";
+import {EndFakeHeader, EndFakePlayer, EndItem, PlayerItem, TeamHeader} from "./GridItem";
 import {blue} from "@mui/material/colors";
 import useMedia from "../../hooks/Media";
 
@@ -14,7 +14,7 @@ const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
 
     return (
         <React.Fragment>
-            <Stack sx={{minWidth: "3.5rem", width: "25%"}}>
+            <Stack sx={{minWidth: "2.5rem", width: "30%"}}>
                 <Stack
                     sx={{
                         backgroundColor: blue[100],

@@ -16,13 +16,13 @@ export interface GameTypeInfo {
 
 export const gameInfoByType: Map<GameType, GameTypeInfo> = new Map<GameType, GameTypeInfo>([
     [GameType.Cutthroat, {teamSize: 1, teamCount: 3, name: "cutthroat"}],
-    [GameType.OneVsOne, {teamSize: 1, teamCount: 2, name: "1 vs 1"}],
-    [GameType.TwoVsTwo, {teamSize: 2, teamCount: 2, name: "2 vs 2"}],
-    [GameType.ThreeVsThree, {teamSize: 3, teamCount: 2, name: "3 vs 3"}],
+    [GameType.OneVsOne, {teamSize: 1, teamCount: 2, name: "singles"}],
+    [GameType.TwoVsTwo, {teamSize: 2, teamCount: 2, name: "doubles"}],
+    [GameType.ThreeVsThree, {teamSize: 3, teamCount: 2, name: "triples"}],
 ]);
 
-export const endsCountOptions: number[] = [9, 11, 15, 18, 21];
-export const bowlsCountOptions: number[] = [2, 3, 4, 5, 6];
+export const endsCountOptions: number[] = [7, 12, 14, 16, 21];
+export const bowlsCountOptions: number[] = [2, 3, 4];
 
 export const isTeamFull = (team: IPlayer[], gameType: GameType) => {
     const maxSize = gameInfoByType.get(gameType)?.teamSize;
@@ -44,11 +44,11 @@ function getDefaultGameType() {
 }
 
 function getDefaultEndsCount() {
-    return endsCountOptions[Math.floor(endsCountOptions.length / 2)];
+    return endsCountOptions[endsCountOptions.indexOf(16)];
 }
 
 function getDefaultBowlsPerPlayer() {
-    return bowlsCountOptions[Math.floor(bowlsCountOptions.length / 2)];
+    return bowlsCountOptions[bowlsCountOptions.indexOf(4)];
 }
 
 function useGameCommon() {

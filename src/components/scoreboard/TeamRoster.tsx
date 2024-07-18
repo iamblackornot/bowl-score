@@ -17,7 +17,7 @@ const TeamRoster: React.FC<TeamRosterProps> = (props: TeamRosterProps) => {
 
     return (
         <Box sx={{bgcolor: blue[100]}}>
-            <TeamHeader text={`${teamSize > 1 ? "TEAM" : "PL"} 1`} />
+            <TeamHeader text={`${teamSize > 1 ? "TEAM" : "PL"} ${props.index + 1}`} />
             <Grid container spacing={0.25}>
                 {props.players.map((player: IPlayer) => (
                     <Grid key={`player_item_${player.id}`} xs={isSmallScreen ? Math.floor(12 / teamSize) : 12}>
