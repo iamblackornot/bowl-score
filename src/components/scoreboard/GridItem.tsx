@@ -80,13 +80,14 @@ export type EndItemProps = {
 };
 
 export const EndItem: React.FC<TextItemProps> = (props: TextItemProps) => {
+    const {isSmallScreen} = useMedia();
     return (
         // <GridItem sx={{backgroundColor: blue[400], color: "#fff", width: "6rem"}}>
-        <GridItem sx={{backgroundColor: blue[400], color: "#fff", height: "100%", alignItems: "center"}}>
+        <GridItem sx={{backgroundColor: blue[400], color: "#fff", height: "100%", alignItems: "center", padding: "0"}}>
             <Typography
                 variant="h6"
                 sx={{
-                    fontSize: "calc(1rem + 1vw)",
+                    fontSize: isSmallScreen ? "1rem" : "1.5rem",
                     fontWeight: "600",
                 }}
             >

@@ -30,13 +30,14 @@ export const TeamHeader2: React.FC<TextItemProps2> = (props: TextItemProps2) => 
 };
 
 export const PlayerItem2: React.FC<TextItemProps2> = (props: TextItemProps2) => {
+    const {isSmallScreen} = useMedia();
     const styles = {
         maxHeight: "1.75rem",
         overflow: "hidden",
         whiteSpace: "nowrap",
         height: "100%",
         // width: "100%",
-        fontSize: "calc(1rem + 0.5vw)",
+        fontSize: isSmallScreen ? "1rem" : "1.25rem",
     };
 
     //const {isSmallScreen} = useMedia();
@@ -70,13 +71,16 @@ export type EndItemProps2 = {
 };
 
 export const EndItem2: React.FC<TextItemProps2> = (props: TextItemProps2) => {
+    const {isSmallScreen} = useMedia();
     return (
         // <GridItem sx={{backgroundColor: blue[400], color: "#fff", width: "6rem"}}>
-        <GridItem2 sx={{backgroundColor: blue[400], color: "#fff", height: "100%", alignItems: "center"}}>
+        <GridItem2
+            sx={{backgroundColor: blue[400], color: "#fff", height: "100%", alignItems: "center", padding: "0px"}}
+        >
             <Typography
                 variant="h6"
                 sx={{
-                    fontSize: "calc(1rem + 1vw)",
+                    fontSize: isSmallScreen ? "1rem" : "1.5rem",
                     fontWeight: "600",
                 }}
             >
