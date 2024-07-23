@@ -12,12 +12,12 @@ export const GridItem = styled(Box)(({theme}) => {
     const {isSmallScreen} = useMedia();
     return {
         backgroundColor: "#fff",
-        padding: theme.spacing(isSmallScreen ? 0.5 : 1),
-        // padding: theme.spacing(0.5),
+        padding: theme.spacing(isSmallScreen ? 0.5 : 0.5),
         textAlign: "center",
         color: theme.palette.text.secondary,
         display: "flex",
         justifyContent: "center",
+        overflow: "hidden",
     };
 });
 
@@ -35,11 +35,11 @@ export const TeamHeader: React.FC<TextItemProps> = (props: TextItemProps) => {
 
 export const PlayerItem: React.FC<TextItemProps> = (props: TextItemProps) => {
     const styles = {
-        maxHeight: "1.75rem",
+        maxHeight: "2rem",
         overflow: "hidden",
         whiteSpace: "nowrap",
+        textOverflow: "clip",
         height: "100%",
-        // width: "100%",
     };
 
     const {isSmallScreen} = useMedia();
@@ -66,7 +66,7 @@ export const ScoreItem: React.FC<ScoreItemProps> = (props: ScoreItemProps) => {
         // <GridItem sx={{backgroundColor: props.end % 2 ? blue[50] : blue[100]}}>
         // <GridItem sx={{backgroundColor: props.end % 2 ? "#e5f7ff" : "#f0f0f0", maxWidth: "3rem"}}>
         <GridItem sx={{backgroundColor: props.end % 2 ? "#f0f0f0" : "#e5f7ff"}}>
-            <Typography variant={isSmallScreen ? "h5" : "h4"}>{props.value ?? ""}</Typography>
+            <Typography variant={isSmallScreen ? "h5" : "h5"}>{props.value ?? ""}</Typography>
         </GridItem>
     );
 };
@@ -87,7 +87,7 @@ export const EndItem: React.FC<TextItemProps> = (props: TextItemProps) => {
             <Typography
                 variant="h6"
                 sx={{
-                    fontSize: isSmallScreen ? "1rem" : "1.5rem",
+                    fontSize: isSmallScreen ? "1rem" : "1rem",
                     fontWeight: "600",
                 }}
             >
@@ -97,19 +97,19 @@ export const EndItem: React.FC<TextItemProps> = (props: TextItemProps) => {
     );
 };
 
-// export const TransparentItem: React.FC = () => {
-//     return (
-//         <GridItem sx={{opacity: "0", display: "flex", padding: "0"}}>
-//             <EndItem text="0"></EndItem>
-//         </GridItem>
-//     );
-// };
+export const TransparentItem: React.FC = () => {
+    return (
+        <GridItem sx={{opacity: "0", display: "flex", padding: "0"}}>
+            <EndItem text="11"></EndItem>
+        </GridItem>
+    );
+};
 
 export const EndFakeHeader: React.FC = () => {
     return (
         <GridItem
             //sx={{backgroundColor: blue[400], color: blue[400], height: "fit-content", minWidth: "2rem"}}
-            sx={{backgroundColor: blue[400], color: "#fff", height: "fit-content", minWidth: "2.5rem"}}
+            sx={{backgroundColor: blue[400], color: "#fff", height: "fit-content"}}
         >
             <Typography variant="h5">●</Typography>
         </GridItem>
@@ -118,7 +118,7 @@ export const EndFakeHeader: React.FC = () => {
 
 export const EndFakePlayer: React.FC = () => {
     const styles = {
-        maxHeight: "1.75rem",
+        // maxHeight: "1.75rem",
         overflow: "hidden",
         whiteSpace: "nowrap",
         height: "100%",

@@ -5,8 +5,10 @@ import IPlayer from "../../models/IPlayer";
 import ScoreList from "./ScoreList";
 
 export type TeamScoreProps = {
+    index: number;
     players: IPlayer[];
     scores: number[];
+    enableTotalScoreCol?: boolean;
 };
 
 const TeamScore: React.FC<TeamScoreProps> = (props: TeamScoreProps) => {
@@ -20,8 +22,8 @@ const TeamScore: React.FC<TeamScoreProps> = (props: TeamScoreProps) => {
                 width: "100%",
             }}
         >
-            <TeamRoster index={0} players={props.players} />
-            <ScoreList scores={props.scores} ends={22} enableTotalScoreCol />
+            <TeamRoster index={props.index} players={props.players} />
+            <ScoreList scores={props.scores} ends={22} enableTotalScoreCol={props.enableTotalScoreCol} />
         </Box>
     );
 };

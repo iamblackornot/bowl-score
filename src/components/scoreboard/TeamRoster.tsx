@@ -16,7 +16,7 @@ const TeamRoster: React.FC<TeamRosterProps> = (props: TeamRosterProps) => {
     const {isSmallScreen} = useMedia();
 
     return (
-        <Box sx={{bgcolor: blue[100]}}>
+        <Box sx={{bgcolor: blue[100], width: "100%", overflow: "hidden"}}>
             <TeamHeader text={`${teamSize > 1 ? "TEAM" : "PL"} ${props.index + 1}`} />
             <Grid container spacing={0.25}>
                 {props.players.map((player: IPlayer) => (

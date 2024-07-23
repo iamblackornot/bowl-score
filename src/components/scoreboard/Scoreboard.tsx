@@ -12,9 +12,9 @@ export type ScoreboardProps = {
 const Scoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) => {
     return (
         <Stack direction="row" sx={{height: "fit-content"}}>
-            <TeamScore players={props.teams?.[0]} scores={props.scores?.[0]} />
+            <TeamScore index={0} players={props.teams?.[0]} scores={props.scores?.[0]} enableTotalScoreCol />
             <EndColumn ends={props.scores?.[0]?.length} teamSize={props.teams?.[1]?.length} />
-            <TeamScore players={props.teams?.[1]} scores={props.scores?.[1]} />
+            <TeamScore index={1} players={props.teams?.[1]} scores={props.scores?.[1]} enableTotalScoreCol />
         </Stack>
     );
 };

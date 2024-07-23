@@ -6,10 +6,13 @@ import RegularScoreboardDemo1 from "./dialogs/RegularScoreboardDemo1";
 import {Button, Stack} from "@mui/material";
 import RegularScoreboardDemo2 from "./dialogs/RegularScoreboardDemo2";
 
+import CutthroatScoreboardDemo from "./dialogs/CutthroatScoreboardDemo";
+
 function App() {
     const [openCreate, setOpenCreate] = useState(false);
     const [openScoredboard1, setOpenScoredboard1] = useState(false);
     const [openScoredboard2, setOpenScoredboard2] = useState(false);
+    const [openCutthroatScoredboard, setOpenCutthroatScoredboard] = useState(false);
 
     return (
         <>
@@ -25,13 +28,20 @@ function App() {
                 <Button key="scoreboard_demo_2" variant="contained" onClick={() => setOpenScoredboard2(true)}>
                     Scoreboard v2
                 </Button>
+                <Button
+                    key="cutthroat_scoreboard_demo"
+                    variant="contained"
+                    onClick={() => setOpenCutthroatScoredboard(true)}
+                >
+                    Scoreboard Cutthroat
+                </Button>
             </Stack>
             <RegularScoreboardDemo1 open={openScoredboard1} onClose={() => setOpenScoredboard1(false)} />
             <RegularScoreboardDemo2 open={openScoredboard2} onClose={() => setOpenScoredboard2(false)} />
-
-            {/* <SimpleContainer /> */}
-            {/* <SimpleContainer /> */}
-            {/* <ResponsiveGrid /> */}
+            <CutthroatScoreboardDemo
+                open={openCutthroatScoredboard}
+                onClose={() => setOpenCutthroatScoredboard(false)}
+            />
         </>
     );
 }

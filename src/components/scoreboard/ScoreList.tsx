@@ -6,7 +6,7 @@ import {ScoreItem} from "./GridItem";
 export type ScoreListProps = {
     scores: number[];
     ends: number;
-    enableTotalScoreCol: boolean | null;
+    enableTotalScoreCol?: boolean;
 };
 
 const ScoreList: React.FC<ScoreListProps> = (props: ScoreListProps) => {

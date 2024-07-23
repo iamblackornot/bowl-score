@@ -21,48 +21,17 @@ const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
                         opacity: "1",
                     }}
                 >
-                    {/* <EndFakeHeader /> */}
                     <EndFakeHeader />
-
-                    {/* <TeamHeader text="22" /> */}
                     <Stack direction={isSmallScreen ? "row" : "column"} spacing={0.25} sx={{opacity: "0"}}>
-                        {/* <PlayerItem text="1" />
-                        <PlayerItem text="1" />
-                        <PlayerItem text="1" /> */}
                         {[...Array(props.teamSize).keys()].map((value: number) => (
                             <EndFakePlayer key={`end_fake_player_${value}`} />
                         ))}
                     </Stack>
-
-                    {/* <Grid container spacing={isSmallScreen ? 0.25 : 0.25} sx={{opacity: "1"}}> */}
-
-                    {/* <Grid container spacing={0.25} sx={{opacity: "1"}}>
-                        <Grid
-                            key={`end_fake_player_item_${0}`}
-                            xs={isSmallScreen ? Math.floor(12 / props.teamSize) : 12}
-                        >
-                            <PlayerItem text="1" />
-                        </Grid>
-                        <Grid
-                            key={`end_fake_player_item_${1}`}
-                            xs={isSmallScreen ? Math.floor(12 / props.teamSize) : 12}
-                        >
-                            <PlayerItem text="1" />
-                        </Grid>
-                        <Grid
-                            key={`end_fake_player_item_${2}`}
-                            xs={isSmallScreen ? Math.floor(12 / props.teamSize) : 12}
-                        >
-                            <PlayerItem text="1" />
-                        </Grid>
-                    </Grid> */}
                 </Stack>
                 <Stack
                     spacing={0.5}
                     sx={{
                         height: "100%",
-                        // paddingRight: `${theme.spacing(0.25)}`,
-                        // paddingLeft: `${theme.spacing(0.25)}`,
                         backgroundColor: "#fff",
                     }}
                 >
