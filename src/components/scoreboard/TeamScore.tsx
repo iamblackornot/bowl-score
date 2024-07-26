@@ -9,6 +9,8 @@ export type TeamScoreProps = {
     players: IPlayer[];
     scores: number[];
     enableTotalScoreCol?: boolean;
+    currEnd: number;
+    onScoreClick?: (teamIndex: number, end: number) => void;
 };
 
 const TeamScore: React.FC<TeamScoreProps> = (props: TeamScoreProps) => {
@@ -23,7 +25,12 @@ const TeamScore: React.FC<TeamScoreProps> = (props: TeamScoreProps) => {
             }}
         >
             <TeamRoster index={props.index} players={props.players} />
-            <ScoreList scores={props.scores} ends={22} enableTotalScoreCol={props.enableTotalScoreCol} />
+            <ScoreList
+                scores={props.scores}
+                currEnd={props.currEnd}
+                enableTotalScoreCol={props.enableTotalScoreCol}
+                onScoreClick={(end: number) => props.onScoreClick && props.onScoreClick(props.index, end)}
+            />
         </Box>
     );
 };

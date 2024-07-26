@@ -1,18 +1,18 @@
 import * as React from "react";
 import {Box, Typography, useMediaQuery} from "@mui/material";
-import {styled} from "@mui/material/styles";
-import {blue} from "@mui/material/colors";
+import {useTheme, styled} from "@mui/material/styles";
+import {blue, orange, red} from "@mui/material/colors";
 import useMedia from "../../hooks/Media";
+import {Theme} from "@mui/material/styles/createTheme";
 
 const addVerticalTextOrientation = (style: object) => {
     return {...style, writingMode: "vertical-rl", maxHeight: "12.5rem", textAlight: "start"};
 };
 
 export const GridItem = styled(Box)(({theme}) => {
-    const {isSmallScreen} = useMedia();
     return {
         backgroundColor: "#fff",
-        padding: theme.spacing(isSmallScreen ? 0.5 : 0.5),
+        padding: theme.spacing(0.5),
         textAlign: "center",
         color: theme.palette.text.secondary,
         display: "flex",
@@ -55,43 +55,73 @@ export const PlayerItem: React.FC<TextItemProps> = (props: TextItemProps) => {
 
 export type ScoreItemProps = {
     end: number;
-    value: number | null;
+    value?: number | null;
+    highlight?: boolean;
+    invalid?: boolean;
+    onClick?: () => void;
+};
+
+const addScoreHightlight = (style: object, theme: Theme) => {
+    return {...style, backgroundColor: orange[100], color: theme.palette.text.secondary};
+};
+
+const addInvalidScoreHightlight = (style: object, theme: Theme) => {
+    return {...style, backgroundColor: red[100], color: theme.palette.text.secondary};
 };
 
 export const ScoreItem: React.FC<ScoreItemProps> = (props: ScoreItemProps) => {
-    const {isSmallScreen} = useMedia();
+    const theme = useTheme();
+    let styles = {
+        backgroundColor: props.end % 2 ? "#f0f0f0" : "#e5f7ff",
+    };
+
+    if (props.highlight) styles = addScoreHightlight(styles, theme);
+    else if (props.invalid) styles = addInvalidScoreHightlight(styles, theme);
 
     return (
-        // <GridItem sx={{backgroundColor: props.end % 2 ? blueGrey[100] : blueGrey[50]}}>
-        // <GridItem sx={{backgroundColor: props.end % 2 ? blue[50] : blue[100]}}>
-        // <GridItem sx={{backgroundColor: props.end % 2 ? "#e5f7ff" : "#f0f0f0", maxWidth: "3rem"}}>
-        <GridItem sx={{backgroundColor: props.end % 2 ? "#f0f0f0" : "#e5f7ff"}}>
-            <Typography variant={isSmallScreen ? "h5" : "h5"}>{props.value ?? ""}</Typography>
+        <GridItem sx={styles} onClick={() => props.onClick && props.onClick()}>
+            <Typography variant={"h5"}>{props.value ?? "-"}</Typography>
         </GridItem>
     );
 };
 
-// export const TransparentItem: React.FC = () => {
-//     return <GridItem sx={{width: "6rem", opacity: "0"}}></GridItem>;
-// };
-
 export type EndItemProps = {
     end: number;
+    invalid?: boolean;
+    highlight?: boolean;
 };
 
-export const EndItem: React.FC<TextItemProps> = (props: TextItemProps) => {
-    const {isSmallScreen} = useMedia();
+const addEndHightlight = (style: object, theme: Theme): object => {
+    return {...style, backgroundColor: orange[400], color: theme.palette.text.secondary};
+};
+
+const addInvalidEndHightlight = (style: object, theme: Theme): object => {
+    return {...style, backgroundColor: red[400], color: theme.palette.text.secondary};
+};
+
+export const EndItem: React.FC<EndItemProps> = (props: EndItemProps) => {
+    const theme = useTheme();
+    let styles: object = {
+        backgroundColor: blue[400],
+        color: "#fff",
+        height: "100%",
+        alignItems: "center",
+        padding: "0",
+    };
+
+    if (props.highlight) styles = addEndHightlight(styles, theme);
+    else if (props.invalid) styles = addInvalidEndHightlight(styles, theme);
+
     return (
-        // <GridItem sx={{backgroundColor: blue[400], color: "#fff", width: "6rem"}}>
-        <GridItem sx={{backgroundColor: blue[400], color: "#fff", height: "100%", alignItems: "center", padding: "0"}}>
+        <GridItem sx={styles}>
             <Typography
                 variant="h6"
                 sx={{
-                    fontSize: isSmallScreen ? "1rem" : "1rem",
+                    fontSize: "1rem",
                     fontWeight: "600",
                 }}
             >
-                {props.text}
+                {props.end == 0 ? "H" : props.end}
             </Typography>
         </GridItem>
     );
@@ -100,17 +130,14 @@ export const EndItem: React.FC<TextItemProps> = (props: TextItemProps) => {
 export const TransparentItem: React.FC = () => {
     return (
         <GridItem sx={{opacity: "0", display: "flex", padding: "0"}}>
-            <EndItem text="11"></EndItem>
+            <EndItem end={11}></EndItem>
         </GridItem>
     );
 };
 
 export const EndFakeHeader: React.FC = () => {
     return (
-        <GridItem
-            //sx={{backgroundColor: blue[400], color: blue[400], height: "fit-content", minWidth: "2rem"}}
-            sx={{backgroundColor: blue[400], color: "#fff", height: "fit-content"}}
-        >
+        <GridItem sx={{backgroundColor: blue[400], color: "#fff", height: "fit-content"}}>
             <Typography variant="h5">●</Typography>
         </GridItem>
     );
@@ -118,12 +145,9 @@ export const EndFakeHeader: React.FC = () => {
 
 export const EndFakePlayer: React.FC = () => {
     const styles = {
-        // maxHeight: "1.75rem",
         overflow: "hidden",
         whiteSpace: "nowrap",
         height: "100%",
-        // width: "100%",
-        //backgr
     };
 
     const isSmallScreen = useMediaQuery("(max-width:420px)");
