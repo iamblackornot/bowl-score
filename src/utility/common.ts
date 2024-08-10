@@ -1,18 +1,57 @@
-export const getCurrEnd = (scores: number[][]) => {
+import {GameType} from "../hooks/Game";
+import {IGame} from "../models/IGame";
+
+// const getRegularCurrEnd = (scores: number[][]) => {
+//     const teamCount = scores.length;
+//     const endCount = scores?.[0]?.length ?? 0;
+
+//     for (let currEnd = 1; currEnd < endCount; ++currEnd) {
+//         let hasScore = false;
+
+//         for (let currTeam = 0; currTeam < teamCount && !hasScore; ++currTeam) {
+//             hasScore ||= scores[currTeam][currEnd] !== 0;
+//         }
+
+//         if (!hasScore) return currEnd;
+//     }
+
+//     return Math.max(0, endCount - 1);
+// };
+
+const getRegularCurrEnd = (scores: number[][]) => {
     const teamCount = scores.length;
     const endCount = scores?.[0]?.length ?? 0;
 
-    for (let currEnd = 1; currEnd < endCount; ++currEnd) {
+    for (let currEnd = endCount - 1; currEnd > 0; --currEnd) {
         let hasScore = false;
 
         for (let currTeam = 0; currTeam < teamCount && !hasScore; ++currTeam) {
             hasScore ||= scores[currTeam][currEnd] !== 0;
         }
 
-        if (!hasScore) return currEnd;
+        if (hasScore) return Math.min(currEnd + 1, endCount - 1);
     }
 
-    return Math.max(0, endCount - 1);
+    return 1;
+};
+
+const getCutthroatCurrEnd = (scores: number[][]) => {
+    const endCount = scores?.[0]?.length ?? 0;
+
+    for (let i = 1; i < endCount; ++i) {
+        const currEnd = endCount - 1 - i;
+        const isValid = cutthroatEndValidate(scores, currEnd);
+
+        if (isValid) return Math.min(currEnd + 1, endCount - 1);
+    }
+
+    return 1;
+};
+
+export const getCurrEnd = (gameType: GameType, scores: number[][]) => {
+    if (gameType === GameType.Cutthroat) return getCutthroatCurrEnd(scores);
+
+    return getRegularCurrEnd(scores);
 };
 
 export const endScoreSum = (scores: number[][], end: number) => {
@@ -31,22 +70,15 @@ export const cutthroatEndValidate = (scores: number[][], end: number) => {
     return 10 === endScoreSum(scores, end);
 };
 
-export const getCutthroatCurrEnd = (scores: number[][]) => {
-    const endCount = scores?.[0]?.length ?? 0;
-
-    for (let i = 1; i < endCount; ++i) {
-        const currEnd = endCount - 1 - i;
-        const isValid = cutthroatEndValidate(scores, currEnd);
-
-        if (isValid) return Math.min(currEnd + 1, endCount - 1);
-    }
-
-    return 1;
-};
-
 export type EndValidationFunc = (scores: number[][], end: number) => boolean;
 
-export const getValidEndList = (scores: number[][], endCount: number, validationFunc: EndValidationFunc) => {
+export const getValidEndList = (game: IGame) => {
+    if (game.type !== GameType.Cutthroat) return undefined;
+
+    return getValidEndListInternal(game.scores, game.ends, cutthroatEndValidate);
+};
+
+const getValidEndListInternal = (scores: number[][], endCount: number, validationFunc: EndValidationFunc) => {
     const res: boolean[] = [true];
 
     for (let i = 1; i < endCount; ++i) {
@@ -59,3 +91,20 @@ export const getValidEndList = (scores: number[][], endCount: number, validation
 export const iota = (length: number) => {
     return [...Array(length).keys()];
 };
+
+export const toTimeElapsedString = (started: Date) => {
+    const now = new Date();
+    const elapsed = now.getTime() - started.getTime();
+
+    const seconds = Math.floor((elapsed / 1000) % 60);
+    const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+    const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+
+    if (hours !== 0) return `${hours}h ${minutes}m`;
+    if (minutes !== 0) return `${minutes}m`;
+    return `${seconds}s`;
+};
+
+export function mergeObjects<T, U>(obj1: T, obj2: U): T & U {
+    return {...obj1, ...obj2};
+}

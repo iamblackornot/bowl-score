@@ -1,18 +1,14 @@
 import * as React from "react";
 import {Stack} from "@mui/material";
-import IPlayer from "../../models/IPlayer";
 import EndColumn from "./EndColumn";
 import TeamScore from "./TeamScore";
 import SetScoreDialog from "../../dialogs/SetScoreDialog";
 import useScoreDialog from "../../hooks/ScoreDialog";
 import {iota} from "../../utility/common";
+import {IGame} from "../../models/IGame";
 
 export type ScoreboardProps = {
-    teams: IPlayer[][];
-    scores: number[][];
-    validEnds?: boolean[];
-    bowlsPerPlayer: number;
-    currEnd: number;
+    game: IGame;
     onScoreChange?: (scores: ScoreParams[]) => void;
 };
 
@@ -32,7 +28,7 @@ const Scoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) => {
             {value, teamIndex: scoreDialog.state.teamIndex, end: scoreDialog.state.end},
         ];
 
-        for (let i = 0; i < props.teams.length; ++i) {
+        for (let i = 0; i < props.game.teams.length; ++i) {
             if (i !== scoreDialog.state.teamIndex) {
                 scoresChanged.push({value: 0, teamIndex: i, end: scoreDialog.state.end});
             }
@@ -42,33 +38,34 @@ const Scoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) => {
     };
 
     const onScoreClick = (teamIndex: number, end: number) => {
-        const teamSize: number = props.teams?.[0]?.length ?? 0;
-        const maxScore: number = props.bowlsPerPlayer * teamSize;
+        const teamSize: number = props.game.teams?.[0]?.length ?? 0;
+        const maxScore: number = props.game.bowls * teamSize;
         scoreDialog.open(iota(maxScore + 1), teamIndex, end);
     };
 
     return (
         <React.Fragment>
-            <Stack direction="row" sx={{height: "fit-content"}}>
+            <Stack direction="row" sx={{maxWidth: "640px", height: "fit-content"}}>
                 <TeamScore
                     index={0}
-                    players={props.teams?.[0]}
-                    scores={props.scores?.[0]}
+                    players={props.game.teams?.[0]}
+                    scores={props.game.scores?.[0]}
                     enableTotalScoreCol
-                    currEnd={props.currEnd}
+                    currEnd={props.game.currEnd}
                     onScoreClick={onScoreClick}
                 />
                 <EndColumn
-                    ends={props.scores?.[0]?.length}
-                    currEnd={props.currEnd}
-                    teamSize={props.teams?.[1]?.length}
+                    ends={props.game.scores?.[0]?.length}
+                    currEnd={props.game.currEnd}
+                    teamSize={props.game.teams?.[0]?.length}
+                    width="30%"
                 />
                 <TeamScore
                     index={1}
-                    players={props.teams?.[1]}
-                    scores={props.scores?.[1]}
+                    players={props.game.teams?.[1]}
+                    scores={props.game.scores?.[1]}
                     enableTotalScoreCol
-                    currEnd={props.currEnd}
+                    currEnd={props.game.currEnd}
                     onScoreClick={onScoreClick}
                 />
             </Stack>

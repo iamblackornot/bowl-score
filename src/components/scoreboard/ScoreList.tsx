@@ -24,29 +24,33 @@ const ScoreList: React.FC<ScoreListProps> = (props: ScoreListProps) => {
     return (
         <Box sx={{bgcolor: "#fff"}}>
             <Grid container spacing={0.5}>
-                {props.scores.map((score: number, index: number) => (
-                    <React.Fragment key={`score_${index}`}>
-                        <Grid xs={props.enableTotalScoreCol ? 6 : 12}>
-                            <ScoreItem
-                                end={index}
-                                value={score !== 0 ? score : undefined}
-                                highlight={index == props.currEnd}
-                                invalid={props.validEnds && !props.validEnds[index] && index <= props.currEnd}
-                                onClick={() => props.onScoreClick && props.onScoreClick(index)}
-                            />
-                        </Grid>
-                        {props.enableTotalScoreCol && (
-                            <Grid xs={6}>
+                {props.scores.map((score: number, index: number) => {
+                    if (index === 0) return;
+
+                    return (
+                        <React.Fragment key={`score_${index}`}>
+                            <Grid xs={props.enableTotalScoreCol ? 6 : 12}>
                                 <ScoreItem
                                     end={index}
-                                    value={index <= props.currEnd ? partialSum[index] : undefined}
-                                    invalid={props.validEnds && !props.validEnds[index] && index <= props.currEnd}
+                                    value={score !== 0 ? score : undefined}
                                     highlight={index == props.currEnd}
+                                    invalid={props.validEnds && !props.validEnds[index] && index <= props.currEnd}
+                                    onClick={() => index <= props.currEnd && props.onScoreClick?.(index)}
                                 />
                             </Grid>
-                        )}
-                    </React.Fragment>
-                ))}
+                            {props.enableTotalScoreCol && (
+                                <Grid xs={6}>
+                                    <ScoreItem
+                                        end={index}
+                                        value={index <= props.currEnd ? partialSum[index] : undefined}
+                                        invalid={props.validEnds && !props.validEnds[index] && index <= props.currEnd}
+                                        highlight={index == props.currEnd}
+                                    />
+                                </Grid>
+                            )}
+                        </React.Fragment>
+                    );
+                })}
             </Grid>
         </Box>
     );

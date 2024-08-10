@@ -2,7 +2,7 @@
 import React from "react";
 import {Dialog, DialogContent, DialogTitle, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import ScoreSelect from "../components/ScoreSelect";
+import ScoreSelect from "../components/scoreboard/ScoreSelect";
 
 export type SetScoreDialogProps = {
     isOpen: boolean;

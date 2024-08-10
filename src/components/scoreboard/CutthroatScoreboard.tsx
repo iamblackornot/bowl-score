@@ -27,15 +27,6 @@ const ScoreBox = styled(Box)(({theme}) => {
 });
 
 const CutthroatScoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) => {
-    // const total: number[] = [];
-
-    // for (const score of props.scores) {
-    //     total.push(
-    //         score.reduce((acc, value) => {
-    //             return acc + value;
-    //         }, 0)
-    //     );
-    // }
     const scoreDialog = useScoreDialog();
 
     const onScoreSet = (value: number) => {
@@ -59,18 +50,19 @@ const CutthroatScoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) 
                 <Stack direction="row" sx={{height: "fit-content"}}>
                     <EndColumn
                         teamSize={1}
-                        ends={props.scores?.[0]?.length ?? 0}
-                        currEnd={props.currEnd}
-                        validEnds={props.validEnds}
+                        ends={props.game.scores?.[0]?.length ?? 0}
+                        currEnd={props.game.currEnd}
+                        validEnds={props.game.validEnds}
+                        width="15%"
                     />
                     <Stack direction="row" spacing={0.25} sx={{height: "fit-content", overflow: "hidden"}}>
                         {iota(3).map((index) => (
                             <Stack key={`stack_team_${index}`} direction="column" sx={{overflow: "hidden"}}>
-                                <TeamRoster players={props.teams?.[index]} index={index} />
+                                <TeamRoster players={props.game.teams?.[index]} index={index} />
                                 <ScoreList
-                                    scores={props.scores?.[index]}
-                                    validEnds={props.validEnds}
-                                    currEnd={props.currEnd}
+                                    scores={props.game.scores?.[index]}
+                                    validEnds={props.game.validEnds}
+                                    currEnd={props.game.currEnd}
                                     onScoreClick={(end: number) => props.onScoreChange && onScoreClick(index, end)}
                                     enableTotalScoreCol
                                 />

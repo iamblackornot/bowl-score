@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Autocomplete, {AutocompleteRenderInputParams, createFilterOptions} from "@mui/material/Autocomplete";
-import IPlayer from "../models/IPlayer";
+import IPlayer from "../../models/IPlayer";
 import {Button, CircularProgress, FilterOptionsState, Stack, TextField} from "@mui/material";
-import AddNewPlayerDialog from "../dialogs/AddNewPlayerDialog";
+import AddNewPlayerDialog from "../../dialogs/AddNewPlayerDialog";
 
 export type PlayerSelectProps = {
     onPlayerAdd: (player: IPlayer | null) => void;
@@ -15,6 +15,12 @@ const PlayerSelect: React.FC<PlayerSelectProps> = (props: PlayerSelectProps) => 
     const [openAddNewPlayerDlg, toggleOpenAddNewPlayerDlg] = React.useState(false);
     const [newPlayerName, setNewPlayerName] = React.useState("");
     const [value, setValue] = React.useState<IPlayer | null>(null);
+
+    useEffect(() => {
+        if (value && props.players.indexOf(value) < 0) {
+            setValue(null);
+        }
+    }, [props.players, value]);
 
     const onChange = (_event: React.SyntheticEvent<Element, Event>, newValue: string | IPlayer | null) => {
         if (typeof newValue === "string") {

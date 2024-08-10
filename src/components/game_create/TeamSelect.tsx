@@ -1,6 +1,6 @@
 import React from "react";
 import PlayerSelect from "./PlayerSelect";
-import IPlayer from "../models/IPlayer";
+import IPlayer from "../../models/IPlayer";
 import {Grid, IconButton, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {Person} from "@mui/icons-material";

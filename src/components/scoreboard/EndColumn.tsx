@@ -10,6 +10,7 @@ export type EndColumnProps = {
     currEnd: number;
     teamSize: number;
     validEnds?: boolean[];
+    width: string;
 };
 
 const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
@@ -17,7 +18,7 @@ const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
 
     return (
         <React.Fragment>
-            <Stack sx={{minWidth: "2.5rem", width: "30%"}}>
+            <Stack sx={{minWidth: "2.5rem", width: props.width}}>
                 <Stack
                     sx={{
                         backgroundColor: blue[100],
@@ -38,7 +39,7 @@ const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
                         backgroundColor: "#fff",
                     }}
                 >
-                    <EndItem key={`end_item_0}`} end={0} />
+                    {/* <EndItem key={`end_item_0}`} end={0} /> */}
                     {iota(props.ends - 1).map((value: number) => {
                         const end = value + 1;
                         return (

@@ -8,7 +8,7 @@ export default function usePlayers() {
 
     async function loadPlayers() {
         const data = await request(async () => await dataServer.getPlayers());
-        setData(data ? data : []);
+        setData(data);
     }
 
     async function addPlayer(name: string): Promise<IPlayer | null> {

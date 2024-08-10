@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -20,7 +20,7 @@ import {
 import {useTheme} from "@mui/material/styles";
 
 import ErrorNotification from "../components/ErrorNotification";
-import TeamSelect from "../components/TeamSelect";
+import TeamSelect from "../components/game_create/TeamSelect";
 
 import IPlayer from "../models/IPlayer";
 import {
@@ -33,7 +33,7 @@ import {
     useCreateGame,
 } from "../hooks/Game";
 import usePlayers from "../hooks/Players";
-import ToggleSelect, {ToggleSelectOption} from "../components/ToggleSelect";
+import ToggleSelect, {ToggleSelectOption} from "../components/game_create/ToggleSelect";
 import SimpleModal from "./SimpleModal";
 import {Person} from "@mui/icons-material";
 
@@ -56,10 +56,10 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
     const players = usePlayers();
 
     React.useEffect(() => {
-        if (open && players.data === null && !players.loading) {
+        if (open && !players.loading) {
             players.loadPlayers();
         }
-    }, [open, players]);
+    }, [open]);
 
     const handleEntering = React.useCallback(() => {
         const dialog = document.querySelector(".MuiDialog-container");
@@ -228,10 +228,14 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
         return true;
     };
 
-    const onConfirmModalConfirm = () => {
+    const onConfirmModalConfirm = async () => {
         setConfirmModalOpen(false);
-        game.reset();
-        onClose();
+        const res = await game.create();
+
+        if (res) {
+            game.reset();
+            onClose();
+        }
     };
 
     const onConfirmModalCancel = () => {
@@ -295,12 +299,12 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
             </DialogContent>
             {generateTeamSelectionList()}
             <DialogActions>
-                <Button variant="outlined" autoFocus onClick={handleCancel}>
+                <LoadingButton loading={game.loading} variant="outlined" autoFocus onClick={handleCancel}>
                     Cancel
-                </Button>
-                <Button variant="contained" onClick={handleCreate}>
+                </LoadingButton>
+                <LoadingButton loading={game.loading} variant="contained" onClick={handleCreate}>
                     Create
-                </Button>
+                </LoadingButton>
             </DialogActions>
             <SimpleModal
                 open={confirmModalOpen}
@@ -325,6 +329,11 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
                 opened={players.error.active}
                 message={players.error.errorMessage}
                 onClose={() => players.error.toggleActive(false)}
+            />
+            <ErrorNotification
+                opened={game.error.active}
+                message={game.error.errorMessage}
+                onClose={() => game.error.toggleActive(false)}
             />
         </Dialog>
     );

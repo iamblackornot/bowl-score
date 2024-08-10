@@ -16,6 +16,7 @@ const ErrorNotification: React.FC<ErrorNotificationProps> = (props: ErrorNotific
         backgroundColor: "crimson",
         fontWeight: "bold",
         textAlign: "center",
+        width: "fit-content",
     };
 
     return (
@@ -25,7 +26,12 @@ const ErrorNotification: React.FC<ErrorNotificationProps> = (props: ErrorNotific
             TransitionComponent={SlideTransition}
             message={props.message}
             onClose={props.onClose}
-            autoHideDuration={5000}
+            autoHideDuration={3000}
+            sx={{
+                maxWidth: "80%",
+                width: "fit-content",
+                margin: "auto",
+            }}
         >
             <SnackbarContent sx={style} message={props.message} />
         </Snackbar>
