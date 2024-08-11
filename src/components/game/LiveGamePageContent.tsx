@@ -6,10 +6,6 @@ import LiveGame from "./LiveGame";
 import ErrorNotification from "../ErrorNotification";
 import NoLiveGame from "./NoLiveGame";
 
-export type LiveGamePageContentProps = {
-    // types...
-};
-
 const LiveGamePageContent: React.FC = () => {
     const live = useLiveGame();
 
@@ -31,11 +27,15 @@ const LiveGamePageContent: React.FC = () => {
         }
     };
 
+    const onEndGame = () => {
+        live.endGame();
+    };
+
     const content = (() => {
         if (live.loading) return <LoadingGameStub />;
         if (!live.game) return <NoLiveGame />;
 
-        return <LiveGame game={live.game} onScoreChange={onScoreChange} />;
+        return <LiveGame game={live.game} onScoreChange={onScoreChange} onEndGame={onEndGame} />;
     })();
 
     return (

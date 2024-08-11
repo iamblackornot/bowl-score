@@ -46,7 +46,7 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
     const {onClose, open} = props;
 
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+    const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     const [confirmModalOpen, setConfirmModalOpen] = React.useState<boolean>(false);
     const [cancelModalOpen, setCancelModalOpen] = React.useState<boolean>(false);

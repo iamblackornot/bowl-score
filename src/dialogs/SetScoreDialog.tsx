@@ -18,7 +18,11 @@ const SetScoreDialog: React.FC<SetScoreDialogProps> = (props: SetScoreDialogProp
     };
 
     return (
-        <Dialog open={props.isOpen} onClose={() => props.onClose()}>
+        <Dialog
+            open={props.isOpen}
+            onClose={() => props.onClose()}
+            sx={{"& .MuiDialog-paper": {margin: "0px !important", width: "100%", maxWidth: "500px"}}}
+        >
             <DialogTitle>Set score</DialogTitle>
             <IconButton
                 aria-label="close"

@@ -9,6 +9,25 @@ import CutthroatScoreboard from "../scoreboard/CutthroatScoreboard";
 export type LiveGameProps = {
     game: IGame;
     onScoreChange?: (scores: ScoreParams[]) => void;
+    onEndGame?: () => void;
+};
+
+type EndGameButtonProps = {
+    OnClick?: () => void;
+};
+
+const EndGameButton: React.FC<EndGameButtonProps> = (props: EndGameButtonProps) => {
+    return (
+        <Fab
+            variant="extended"
+            size="medium"
+            color="primary"
+            sx={{width: "fit-content", marginBottom: "1.5rem !important"}}
+            onClick={() => props.OnClick?.()}
+        >
+            End game
+        </Fab>
+    );
 };
 
 const LiveGame: React.FC<LiveGameProps> = (props: LiveGameProps) => {
@@ -28,9 +47,7 @@ const LiveGame: React.FC<LiveGameProps> = (props: LiveGameProps) => {
                     <CutthroatScoreboard game={props.game} onScoreChange={props.onScoreChange} />
                 )}
             </Stack>
-            <Fab variant="extended" size="medium" color="primary" sx={{marginBottom: "1rem"}}>
-                End game
-            </Fab>
+            <EndGameButton OnClick={() => props.onEndGame?.()} />
         </Stack>
     );
 };

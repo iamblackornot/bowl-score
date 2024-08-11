@@ -135,6 +135,17 @@ export const useLiveGame = () => {
         }
     };
 
+    const endGame = async () => {
+        if (!game) return;
+
+        const res = await dataServer.endGame(game.id);
+
+        if (!res.success) {
+            error.setErrorMessage(res.errorMessage);
+            error.toggleActive(true);
+        }
+    };
+
     const OnError = (message: string) => {
         error.setErrorMessage(message);
         error.toggleActive(true);
@@ -174,11 +185,12 @@ export const useLiveGame = () => {
         }
 
         console.log("game received: ", newGame);
+        error.toggleActive(false);
         setLoading(false);
     };
 
     React.useEffect(() => {
-        gameRef.current = game; // Keep ref updated with the latest game state
+        gameRef.current = game;
     }, [game]);
 
     React.useEffect(() => {
@@ -197,5 +209,5 @@ export const useLiveGame = () => {
         };
     }, []);
 
-    return {loading, game, setScore, error};
+    return {loading, game, setScore, endGame, error};
 };

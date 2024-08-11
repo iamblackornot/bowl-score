@@ -31,6 +31,12 @@ const ErrorNotification: React.FC<ErrorNotificationProps> = (props: ErrorNotific
                 maxWidth: "80%",
                 width: "fit-content",
                 margin: "auto",
+                "& .MuiSnackbarContent-root": {
+                    minWidth: "100px !important",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                },
             }}
         >
             <SnackbarContent sx={style} message={props.message} />

@@ -9,4 +9,5 @@ export default interface IDataProvider {
     createGame(params: ICreateGamePayload): Promise<Result<boolean>>;
     sendError(message: string): Promise<Result<null>>;
     updateScore(params: IScorePayload): Promise<Result<null>>;
+    endGame(id: number): Promise<Result<null>>;
 }

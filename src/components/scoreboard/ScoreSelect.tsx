@@ -12,7 +12,6 @@ export const ScoreItemBox = styled(Paper)(({theme}) => {
         display: "flex",
         justifyContent: "center",
         overflow: "hidden",
-        minWidth: "2rem",
     };
 });
 
@@ -23,10 +22,15 @@ export interface ScoreSelectProps {
 
 const ScoreSelect: React.FC<ScoreSelectProps> = (props: ScoreSelectProps) => {
     return (
-        <Box sx={{maxWidth: "400px"}}>
+        <Box sx={{maxWidth: "500px", width: "100%"}}>
             <Grid container spacing={1}>
                 {props.values.map((value: number) => (
-                    <ValueItem key={`score_${value}`} value={value} onClick={() => props.onValueSelected(value)} />
+                    <ValueItem
+                        key={`score_${value}`}
+                        itemsPerRow={Math.min(props.values.length, 4)}
+                        value={value}
+                        onClick={() => props.onValueSelected(value)}
+                    />
                 ))}
             </Grid>
         </Box>
@@ -34,13 +38,14 @@ const ScoreSelect: React.FC<ScoreSelectProps> = (props: ScoreSelectProps) => {
 };
 
 export interface ValueItemProps {
+    itemsPerRow: number;
     value: number;
     onClick: () => void;
 }
 
 export const ValueItem: React.FC<ValueItemProps> = (props: ValueItemProps) => {
     return (
-        <Grid item xs={3}>
+        <Grid item xs={Math.max(12 / props.itemsPerRow, 1)}>
             <ScoreItemBox elevation={2} onClick={() => props.onClick()}>
                 <Typography variant="h5">{props.value}</Typography>
             </ScoreItemBox>

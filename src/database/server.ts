@@ -63,6 +63,11 @@ class ServerDataProvider implements IDataProvider {
         return res.data;
     }
 
+    public async endGame(id: number): Promise<Result<null>> {
+        const res = await this.publicInstance.post("/game/end", {id});
+        return res.data;
+    }
+
     private getServerAddress(endpoint: string, port: number): string {
         return `${endpoint}:${port}`;
     }
