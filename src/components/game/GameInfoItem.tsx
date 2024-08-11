@@ -1,4 +1,4 @@
-import {Divider, InputLabel, Stack, Typography} from "@mui/material";
+import {InputLabel, Stack, Typography} from "@mui/material";
 
 export type GameInfoItemProps = {
     label: string;
