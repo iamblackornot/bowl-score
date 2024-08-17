@@ -98,7 +98,7 @@ export const toTimeElapsedString = (started: Date) => {
 
     const seconds = Math.floor((elapsed / 1000) % 60);
     const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
-    const hours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+    const hours = Math.floor(elapsed / (1000 * 60 * 60));
 
     if (hours !== 0) return `${hours}h ${minutes}m`;
     if (minutes !== 0) return `${minutes}m`;

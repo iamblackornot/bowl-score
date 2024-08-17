@@ -130,7 +130,7 @@ export const useLiveGame = () => {
         const res = await dataServer.updateScore({gameId: game.id, ...params});
 
         if (!res.success) {
-            error.setErrorMessage("failed to update score");
+            error.setErrorMessage(`failed to update score: ${res.errorMessage}`);
             error.toggleActive(true);
         }
     };

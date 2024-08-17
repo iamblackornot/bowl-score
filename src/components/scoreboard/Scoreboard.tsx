@@ -6,6 +6,7 @@ import SetScoreDialog from "../../dialogs/SetScoreDialog";
 import useScoreDialog from "../../hooks/ScoreDialog";
 import {iota} from "../../utility/common";
 import {IGame} from "../../models/IGame";
+import {AuthContext} from "../../hooks/Auth";
 
 export type ScoreboardProps = {
     game: IGame;
@@ -20,6 +21,7 @@ export type ScoreParams = {
 
 const Scoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) => {
     const scoreDialog = useScoreDialog();
+    const auth = React.useContext(AuthContext);
 
     const onScoreSet = (value: number) => {
         if (!props.onScoreChange) return;
@@ -38,6 +40,8 @@ const Scoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) => {
     };
 
     const onScoreClick = (teamIndex: number, end: number) => {
+        if (!auth.isAuthed) return;
+
         const teamSize: number = props.game.teams?.[0]?.length ?? 0;
         const maxScore: number = props.game.bowls * teamSize;
         scoreDialog.open(iota(maxScore + 1), teamIndex, end);

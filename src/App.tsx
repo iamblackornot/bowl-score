@@ -1,20 +1,16 @@
-import {useEffect} from "react";
-
 import "./App.css";
 
 import MainContainer from "./components/main/MainContainer";
 import LiveGamePageContent from "./components/game/LiveGamePageContent";
+import AuthProvider from "./hooks/Auth";
 
 function App() {
-    useEffect(() => {
-        console.log("App mounted");
-        return () => console.log("App unmounted");
-    });
-
     return (
-        <MainContainer>
-            <LiveGamePageContent />
-        </MainContainer>
+        <AuthProvider>
+            <MainContainer>
+                <LiveGamePageContent />
+            </MainContainer>
+        </AuthProvider>
     );
 }
 

@@ -2,24 +2,15 @@ import * as React from "react";
 import {PropsWithChildren} from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import {ThemeProvider} from "@mui/material";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LiveTvIcon from "@mui/icons-material/LiveTv";
-import ScoreboardIcon from "@mui/icons-material/Scoreboard";
-
 import darkTheme from "../../utility/theme";
+import DrawerMenu from "./DrawerMenu";
 
 const drawerWidth = 200;
 
@@ -48,50 +39,6 @@ export default function MainContainer(props: PropsWithChildren<MainContainerProp
         console.log("MainContainer mounted");
         return () => console.log("MainContainer unmounted");
     });
-
-    const drawer = (
-        <div>
-            <Toolbar />
-            <List>
-                <ListItem key="item_user">
-                    <ListItemIcon>
-                        <AccountCircleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Guest"} />
-                </ListItem>
-            </List>
-            <Divider />
-            <List>
-                <ListItem key="item_live" disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <LiveTvIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"Live"} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem key="item_results" disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <ScoreboardIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"Results"} />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-            <Divider />
-            <List>
-                <ListItem key="item_results" disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <ScoreboardIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"Results"} />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-        </div>
-    );
 
     return (
         <Box
@@ -137,7 +84,7 @@ export default function MainContainer(props: PropsWithChildren<MainContainerProp
                             "& .MuiDrawer-paper": {boxSizing: "border-box", width: drawerWidth},
                         }}
                     >
-                        {drawer}
+                        <DrawerMenu />
                     </Drawer>
                 </ThemeProvider>
             </Box>

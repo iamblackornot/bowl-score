@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Fab, Stack} from "@mui/material";
 import GameInfo from "./GameInfo";
 import Scoreboard, {ScoreParams} from "../scoreboard/Scoreboard";
 import {IGame} from "../../models/IGame";
 import {GameType} from "../../hooks/Game";
 import CutthroatScoreboard from "../scoreboard/CutthroatScoreboard";
+import {AuthContext} from "../../hooks/Auth";
 
 export type LiveGameProps = {
     game: IGame;
@@ -31,6 +32,8 @@ const EndGameButton: React.FC<EndGameButtonProps> = (props: EndGameButtonProps) 
 };
 
 const LiveGame: React.FC<LiveGameProps> = (props: LiveGameProps) => {
+    const auth = useContext(AuthContext);
+
     React.useEffect(() => {
         console.log("LiveGame mounted");
         return () => console.log("LiveGame unmounted");
@@ -47,7 +50,7 @@ const LiveGame: React.FC<LiveGameProps> = (props: LiveGameProps) => {
                     <CutthroatScoreboard game={props.game} onScoreChange={props.onScoreChange} />
                 )}
             </Stack>
-            <EndGameButton OnClick={() => props.onEndGame?.()} />
+            {auth.isAuthed && <EndGameButton OnClick={() => props.onEndGame?.()} />}
         </Stack>
     );
 };

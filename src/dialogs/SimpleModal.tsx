@@ -7,13 +7,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 export type SimpleModalProps = {
     open: boolean;
-    content: JSX.Element;
     title: string;
     onConfirm: () => void;
     onCancel: () => void;
 };
 
-const SimpleModal: React.FC<SimpleModalProps> = (props: SimpleModalProps) => {
+const SimpleModal: React.FC<React.PropsWithChildren<SimpleModalProps>> = (
+    props: React.PropsWithChildren<SimpleModalProps>
+) => {
     return (
         <React.Fragment>
             <Dialog
@@ -23,7 +24,7 @@ const SimpleModal: React.FC<SimpleModalProps> = (props: SimpleModalProps) => {
                 sx={{minWidth: "300px"}}
             >
                 <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
-                <DialogContent dividers> {props.content}</DialogContent>
+                <DialogContent dividers> {props.children}</DialogContent>
                 <DialogActions>
                     <Button variant="outlined" autoFocus onClick={props.onCancel}>
                         Cancel

@@ -309,17 +309,19 @@ export default function CreateGameDialog(props: ConfirmationDialogRawProps) {
             <SimpleModal
                 open={confirmModalOpen}
                 title="Confirm game creation"
-                content={getNewGameSummaryContent()}
                 onConfirm={onConfirmModalConfirm}
                 onCancel={onConfirmModalCancel}
-            />
+            >
+                {getNewGameSummaryContent()}
+            </SimpleModal>
             <SimpleModal
                 open={cancelModalOpen}
                 title="You are about to cancel game creation"
-                content={<DialogContentText>Are you sure?</DialogContentText>}
                 onConfirm={onCancelModalConfirm}
                 onCancel={onCancelModalCancel}
-            />
+            >
+                {<DialogContentText>Are you sure?</DialogContentText>}
+            </SimpleModal>
             <ErrorNotification
                 opened={teamNotFullActive}
                 message="not enough players selected"
