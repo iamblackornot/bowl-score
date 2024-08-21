@@ -6,6 +6,9 @@ import {IGame} from "../../models/IGame";
 import {GameType} from "../../hooks/Game";
 import CutthroatScoreboard from "../scoreboard/CutthroatScoreboard";
 import {AuthContext} from "../../hooks/Auth";
+import EndGameDialog from "../../dialogs/EndGameDialog";
+import dataServer from "../../database/server";
+import ErrorNotification from "../ErrorNotification";
 
 export type LiveGameProps = {
     game: IGame;
@@ -34,10 +37,36 @@ const EndGameButton: React.FC<EndGameButtonProps> = (props: EndGameButtonProps) 
 const LiveGame: React.FC<LiveGameProps> = (props: LiveGameProps) => {
     const auth = useContext(AuthContext);
 
+    const [openEndGameDlg, setOpenEndGameDlg] = React.useState(false);
+    const [problems, setProblems] = React.useState<string[]>([]);
+    const [showError, setShowError] = React.useState(false);
+
     React.useEffect(() => {
         console.log("LiveGame mounted");
         return () => console.log("LiveGame unmounted");
     });
+
+    const OnEndGameClick = async () => {
+        setShowError(false);
+        const res = await dataServer.validateGame();
+
+        if (res.success && res.data) {
+            console.log(res.data);
+            setProblems(res.data);
+            setOpenEndGameDlg(true);
+        } else {
+            setShowError(true);
+        }
+    };
+
+    const OnEndGameConfirm = () => {
+        setOpenEndGameDlg(false);
+        props.onEndGame?.();
+    };
+
+    const OnEndGameCancel = () => {
+        setOpenEndGameDlg(false);
+    };
 
     return (
         <Stack spacing={2} display="flex" alignItems="center">
@@ -50,7 +79,19 @@ const LiveGame: React.FC<LiveGameProps> = (props: LiveGameProps) => {
                     <CutthroatScoreboard game={props.game} onScoreChange={props.onScoreChange} />
                 )}
             </Stack>
-            {auth.isAuthed && <EndGameButton OnClick={() => props.onEndGame?.()} />}
+            {auth.isAuthed && <EndGameButton OnClick={OnEndGameClick} />}
+            <EndGameDialog
+                open={openEndGameDlg}
+                title={"Confirm game end"}
+                problems={problems}
+                onConfirm={OnEndGameConfirm}
+                onCancel={OnEndGameCancel}
+            />
+            <ErrorNotification
+                opened={showError}
+                message={"failed to validate game state"}
+                onClose={() => setShowError(false)}
+            />
         </Stack>
     );
 };

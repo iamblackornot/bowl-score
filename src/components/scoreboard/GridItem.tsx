@@ -85,8 +85,22 @@ export const ScoreItem: React.FC<ScoreItemProps> = (props: ScoreItemProps) => {
     );
 };
 
+export type TotalScoreItemProps = {
+    value?: number | null;
+};
+
+export const TotalScoreItem: React.FC<TotalScoreItemProps> = (props: TotalScoreItemProps) => {
+    return (
+        <GridItem sx={{bgcolor: blue[400], color: "#fff"}}>
+            <Typography variant={"h5"} fontWeight={600}>
+                {props.value ?? "-"}
+            </Typography>
+        </GridItem>
+    );
+};
+
 export type EndItemProps = {
-    end: number;
+    end: number | string;
     invalid?: boolean;
     highlight?: boolean;
 };
@@ -121,7 +135,7 @@ export const EndItem: React.FC<EndItemProps> = (props: EndItemProps) => {
                     fontWeight: "600",
                 }}
             >
-                {props.end == 0 ? "H" : props.end}
+                {props.end}
             </Typography>
         </GridItem>
     );
@@ -130,7 +144,7 @@ export const EndItem: React.FC<EndItemProps> = (props: EndItemProps) => {
 export const TransparentItem: React.FC = () => {
     return (
         <GridItem sx={{opacity: "0", display: "flex", padding: "0"}}>
-            <EndItem end={11}></EndItem>
+            <EndItem end={"11"}></EndItem>
         </GridItem>
     );
 };

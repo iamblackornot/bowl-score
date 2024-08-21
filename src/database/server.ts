@@ -3,27 +3,8 @@ import IPlayer from "../models/IPlayer";
 import {IScorePayload} from "../models/IScorePayload";
 import IDataProvider from "./dataprovider";
 import Result from "./result";
-import axios, {AxiosInstance, AxiosResponse, HttpStatusCode, InternalAxiosRequestConfig, isAxiosError} from "axios";
+import axios, {AxiosInstance, AxiosResponse, HttpStatusCode, InternalAxiosRequestConfig} from "axios";
 import {IToken} from "../models/IToken";
-import {useContext} from "react";
-import {AuthContext} from "../hooks/Auth";
-// async (error) => {
-//     if (error.config && !error.config.logsWereSent) {
-//         error.config.logsWereSent = true;
-//         await this.publicInstance.post(`/log`, {message: error.message}, error.config);
-//     }
-
-//     let errMessage = "network error";
-
-//     if (axios.isAxiosError(error)) {
-//         const axiosError = error as AxiosError;
-//         errMessage = axiosError.response?.data ? `${axiosError.response.data}` : `${axiosError.message}`;
-//     }
-
-//     error.data = new Result(false, null, errMessage);
-
-//     return error;
-// }
 
 interface Config extends InternalAxiosRequestConfig {
     logsWereSent?: boolean;
@@ -147,6 +128,11 @@ class ServerDataProvider implements IDataProvider {
     public async endGame(id: number): Promise<Result<null>> {
         const res = await this.privateInstance.post("/game/end", {id});
         return res.data;
+    }
+
+    public async validateGame(): Promise<Result<string[]>> {
+        const res = await this.privateInstance.post("/game/validate");
+        return new Result(res.data.success, res.data.data.problems, res.data.errorMessage);
     }
 
     private getServerAddress(endpoint: string, port: number): string {

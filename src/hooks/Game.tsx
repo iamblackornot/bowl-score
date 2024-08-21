@@ -160,7 +160,7 @@ export const useLiveGame = () => {
         const newGame: IGame = {...gameRef.current};
         newGame.scores[params.teamIndex][params.end] = params.value;
 
-        newGame.currEnd = getCurrEnd(newGame.type, newGame.scores);
+        newGame.currEnd = getCurrEnd(newGame);
 
         if (newGame.type === GameType.Cutthroat) {
             newGame.validEnds = getValidEndList(newGame);
@@ -173,7 +173,7 @@ export const useLiveGame = () => {
 
     const OnGameChanged = (newGame: IGame) => {
         if (newGame.type !== GameType.NoGame) {
-            newGame.currEnd = getCurrEnd(newGame.type, newGame.scores);
+            newGame.currEnd = getCurrEnd(newGame);
 
             if (newGame.type === GameType.Cutthroat) {
                 newGame.validEnds = getValidEndList(newGame);

@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Grid, Stack} from "@mui/material";
-import {EndFakeHeader, EndFakePlayer, EndItem, PlayerItem, TeamHeader} from "./GridItem";
+import {Stack} from "@mui/material";
+import {EndFakeHeader, EndFakePlayer, EndItem} from "./GridItem";
 import {blue} from "@mui/material/colors";
 import useMedia from "../../hooks/Media";
 import {iota} from "../../utility/common";
@@ -11,6 +11,7 @@ export type EndColumnProps = {
     teamSize: number;
     validEnds?: boolean[];
     width: string;
+    totalScore?: boolean;
 };
 
 const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
@@ -51,6 +52,7 @@ const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
                             />
                         );
                     })}
+                    {props.totalScore && <EndItem end="TOT" />}
                 </Stack>
             </Stack>
         </React.Fragment>
@@ -58,27 +60,3 @@ const EndColumn: React.FC<EndColumnProps> = (props: EndColumnProps) => {
 };
 
 export default EndColumn;
-
-export const EndColumn2: React.FC<EndColumnProps> = (props: EndColumnProps) => {
-    const {isSmallScreen} = useMedia();
-
-    return (
-        <React.Fragment>
-            <Stack sx={{backgroundColor: blue[100], opacity: "1", minWidth: "2.5rem"}}>
-                <TeamHeader text="●" />
-
-                <Grid container spacing={0.25} sx={{opacity: "1"}}>
-                    <Grid key={`end_fake_player_item_${0}`} xs={isSmallScreen ? Math.floor(12 / props.teamSize) : 12}>
-                        <PlayerItem text="1" />
-                    </Grid>
-                    <Grid key={`end_fake_player_item_${1}`} xs={isSmallScreen ? Math.floor(12 / props.teamSize) : 12}>
-                        <PlayerItem text="1" />
-                    </Grid>
-                    <Grid key={`end_fake_player_item_${2}`} xs={isSmallScreen ? Math.floor(12 / props.teamSize) : 12}>
-                        <PlayerItem text="1" />
-                    </Grid>
-                </Grid>
-            </Stack>
-        </React.Fragment>
-    );
-};

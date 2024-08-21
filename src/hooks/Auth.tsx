@@ -80,7 +80,7 @@ const defaultAuthContext: AuthContextType = {
         errorMessage: "",
         setErrorMessage: () => {},
     },
-    login: (username: string, password: string): Promise<boolean> => Promise.resolve(false),
+    login: (_username: string, _password: string): Promise<boolean> => Promise.resolve(false),
     logout: (): Promise<void> => Promise.resolve(),
 };
 

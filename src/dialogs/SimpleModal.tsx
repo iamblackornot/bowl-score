@@ -5,12 +5,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export type SimpleModalProps = {
+export interface SimpleModalProps {
     open: boolean;
     title: string;
     onConfirm: () => void;
     onCancel: () => void;
-};
+}
 
 const SimpleModal: React.FC<React.PropsWithChildren<SimpleModalProps>> = (
     props: React.PropsWithChildren<SimpleModalProps>

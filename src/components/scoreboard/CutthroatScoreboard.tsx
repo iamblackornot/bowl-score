@@ -9,6 +9,7 @@ import ScoreList from "./ScoreList";
 import SetScoreDialog from "../../dialogs/SetScoreDialog";
 import useScoreDialog from "../../hooks/ScoreDialog";
 import {iota} from "../../utility/common";
+import {AuthContext} from "../../hooks/Auth";
 
 const ScoreBox = styled(Box)(({theme}) => {
     return {
@@ -28,6 +29,7 @@ const ScoreBox = styled(Box)(({theme}) => {
 
 const CutthroatScoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) => {
     const scoreDialog = useScoreDialog();
+    const auth = React.useContext(AuthContext);
 
     const onScoreSet = (value: number) => {
         if (!props.onScoreChange) return;
@@ -40,6 +42,8 @@ const CutthroatScoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) 
     };
 
     const onScoreClick = (teamIndex: number, end: number) => {
+        if (!auth.isAuthed) return;
+
         const maxScore: number = 10;
         scoreDialog.open(iota(maxScore + 1), teamIndex, end);
     };
@@ -54,6 +58,7 @@ const CutthroatScoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) 
                         currEnd={props.game.currEnd}
                         validEnds={props.game.validEnds}
                         width="15%"
+                        totalScore
                     />
                     <Stack direction="row" spacing={0.25} sx={{height: "fit-content", overflow: "hidden"}}>
                         {iota(3).map((index) => (
@@ -64,7 +69,6 @@ const CutthroatScoreboard: React.FC<ScoreboardProps> = (props: ScoreboardProps) 
                                     validEnds={props.game.validEnds}
                                     currEnd={props.game.currEnd}
                                     onScoreClick={(end: number) => props.onScoreChange && onScoreClick(index, end)}
-                                    enableTotalScoreCol
                                 />
                             </Stack>
                         ))}

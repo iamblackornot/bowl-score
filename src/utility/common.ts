@@ -1,57 +1,34 @@
 import {GameType} from "../hooks/Game";
 import {IGame} from "../models/IGame";
 
-// const getRegularCurrEnd = (scores: number[][]) => {
-//     const teamCount = scores.length;
-//     const endCount = scores?.[0]?.length ?? 0;
-
-//     for (let currEnd = 1; currEnd < endCount; ++currEnd) {
-//         let hasScore = false;
-
-//         for (let currTeam = 0; currTeam < teamCount && !hasScore; ++currTeam) {
-//             hasScore ||= scores[currTeam][currEnd] !== 0;
-//         }
-
-//         if (!hasScore) return currEnd;
-//     }
-
-//     return Math.max(0, endCount - 1);
-// };
-
-const getRegularCurrEnd = (scores: number[][]) => {
+export const regularEndValidate = (scores: number[][], end: number) => {
     const teamCount = scores.length;
-    const endCount = scores?.[0]?.length ?? 0;
+    let hasScore = false;
 
-    for (let currEnd = endCount - 1; currEnd > 0; --currEnd) {
-        let hasScore = false;
-
-        for (let currTeam = 0; currTeam < teamCount && !hasScore; ++currTeam) {
-            hasScore ||= scores[currTeam][currEnd] !== 0;
-        }
-
-        if (hasScore) return Math.min(currEnd + 1, endCount - 1);
+    for (let currTeam = 0; currTeam < teamCount && !hasScore; ++currTeam) {
+        hasScore ||= scores[currTeam][end] !== 0;
     }
-
-    return 1;
+    return hasScore;
 };
 
-const getCutthroatCurrEnd = (scores: number[][]) => {
-    const endCount = scores?.[0]?.length ?? 0;
+export const cutthroatEndValidate = (scores: number[][], end: number) => {
+    return 10 === endScoreSum(scores, end);
+};
+
+export type EndValidationFunc = (scores: number[][], end: number) => boolean;
+
+export const getCurrEnd = (game: IGame) => {
+    const endCount = game.scores?.[0]?.length ?? 0;
+    const validate: EndValidationFunc = game.type == GameType.Cutthroat ? cutthroatEndValidate : regularEndValidate;
 
     for (let i = 1; i < endCount; ++i) {
         const currEnd = endCount - 1 - i;
-        const isValid = cutthroatEndValidate(scores, currEnd);
+        const isValid = validate(game.scores, currEnd);
 
         if (isValid) return Math.min(currEnd + 1, endCount - 1);
     }
 
     return 1;
-};
-
-export const getCurrEnd = (gameType: GameType, scores: number[][]) => {
-    if (gameType === GameType.Cutthroat) return getCutthroatCurrEnd(scores);
-
-    return getRegularCurrEnd(scores);
 };
 
 export const endScoreSum = (scores: number[][], end: number) => {
@@ -65,12 +42,6 @@ export const endScoreSum = (scores: number[][], end: number) => {
 
     return sum;
 };
-
-export const cutthroatEndValidate = (scores: number[][], end: number) => {
-    return 10 === endScoreSum(scores, end);
-};
-
-export type EndValidationFunc = (scores: number[][], end: number) => boolean;
 
 export const getValidEndList = (game: IGame) => {
     if (game.type !== GameType.Cutthroat) return undefined;
