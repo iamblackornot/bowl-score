@@ -16,8 +16,7 @@ const GameInfoItem: React.FC<GameInfoItemProps> = (props: GameInfoItemProps) => 
             >
                 {props.label}
             </InputLabel>
-            {/* <Divider /> */}
-            <Typography variant="h6" fontWeight={700}>
+            <Typography variant="h6" fontWeight={700} fontSize="1rem">
                 {" "}
                 {props.text}
             </Typography>

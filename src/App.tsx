@@ -1,15 +1,14 @@
 import "./App.css";
 
-import MainContainer from "./components/main/MainContainer";
-import LiveGamePageContent from "./components/game/LiveGamePageContent";
+import {RouterProvider} from "react-router-dom";
+
 import AuthProvider from "./hooks/Auth";
+import router from "./Router";
 
 function App() {
     return (
         <AuthProvider>
-            <MainContainer>
-                <LiveGamePageContent />
-            </MainContainer>
+            <RouterProvider router={router} />
         </AuthProvider>
     );
 }

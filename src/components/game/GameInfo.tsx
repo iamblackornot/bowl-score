@@ -22,7 +22,6 @@ export const GameInfo: React.FC<GameInfoProps> = ({game}: GameInfoProps) => {
     return (
         <DefaultContainer>
             <Stack direction="row" spacing={3}>
-                {/* <GameInfoItem label="id" text={game.id.toString()} /> */}
                 <GameInfoItem label="format" text={gameInfoByType.get(game.type)?.name ?? ""} />
                 <GameInfoItem label="ends" text={game.ends.toString()} />
                 <GameInfoItem label="bowls" text={game.bowls.toString()} />

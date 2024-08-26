@@ -10,10 +10,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import LoginDialog from "../../dialogs/LoginDialog";
 import {AuthContext} from "../../hooks/Auth";
+import {useNavigate} from "react-router-dom";
 
 const DrawerMenu: React.FC = () => {
     const [loginOpen, setLoginOpen] = React.useState(false);
     const auth = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const loginClick = () => {
         auth.isAuthed ? auth.logout : setLoginOpen(true);
@@ -25,7 +27,7 @@ const DrawerMenu: React.FC = () => {
             <Divider />
             <List>
                 <ListItem key="item_live" disablePadding>
-                    <ListItemButton>
+                    <ListItemButton onClick={() => navigate("/")}>
                         <ListItemIcon>
                             <LiveTvIcon />
                         </ListItemIcon>
@@ -33,7 +35,7 @@ const DrawerMenu: React.FC = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem key="item_results" disablePadding>
-                    <ListItemButton>
+                    <ListItemButton onClick={() => navigate("/results")}>
                         <ListItemIcon>
                             <ScoreboardIcon />
                         </ListItemIcon>

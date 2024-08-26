@@ -63,9 +63,8 @@ export const iota = (length: number) => {
     return [...Array(length).keys()];
 };
 
-export const toTimeElapsedString = (started: Date) => {
-    const now = new Date();
-    const elapsed = now.getTime() - started.getTime();
+export const timeDiffString = (started: Date, ended: Date) => {
+    const elapsed = ended.getTime() - started.getTime();
 
     const seconds = Math.floor((elapsed / 1000) % 60);
     const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
@@ -74,6 +73,10 @@ export const toTimeElapsedString = (started: Date) => {
     if (hours !== 0) return `${hours}h ${minutes}m`;
     if (minutes !== 0) return `${minutes}m`;
     return `${seconds}s`;
+};
+
+export const toTimeElapsedString = (started: Date) => {
+    return timeDiffString(started, new Date());
 };
 
 export function mergeObjects<T, U>(obj1: T, obj2: U): T & U {

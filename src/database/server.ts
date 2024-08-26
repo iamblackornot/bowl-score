@@ -5,6 +5,7 @@ import IDataProvider from "./dataprovider";
 import Result from "./result";
 import axios, {AxiosInstance, AxiosResponse, HttpStatusCode, InternalAxiosRequestConfig} from "axios";
 import {IToken} from "../models/IToken";
+import {GameSummaryPayload} from "../models/IGame";
 
 interface Config extends InternalAxiosRequestConfig {
     logsWereSent?: boolean;
@@ -70,6 +71,7 @@ class ServerDataProvider implements IDataProvider {
             if (error.response?.status !== HttpStatusCode.Unauthorized) {
                 const config = error.config as Config;
                 if (config && !config.logsWereSent) {
+                    config.params = {};
                     config.logsWereSent = true;
                     await this.publicInstance.post(`/log`, {message: error.message}, error.config);
                 }
@@ -133,6 +135,11 @@ class ServerDataProvider implements IDataProvider {
     public async validateGame(): Promise<Result<string[]>> {
         const res = await this.privateInstance.post("/game/validate");
         return new Result(res.data.success, res.data.data.problems, res.data.errorMessage);
+    }
+
+    public async getGameHistory(page: number, pageSize: number): Promise<Result<GameSummaryPayload>> {
+        const res = await this.publicInstance.get("/game/history", {params: {page, pageSize}});
+        return res.data;
     }
 
     private getServerAddress(endpoint: string, port: number): string {

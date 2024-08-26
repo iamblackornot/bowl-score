@@ -1,4 +1,5 @@
 import ICreateGamePayload from "../models/ICreateGamePayload";
+import {GameSummaryPayload} from "../models/IGame";
 import IPlayer from "../models/IPlayer";
 import {IScorePayload} from "../models/IScorePayload";
 import {IToken} from "../models/IToken";
@@ -16,6 +17,7 @@ export default interface IDataProvider {
     updateScore(params: IScorePayload): Promise<Result<null>>;
     endGame(id: number): Promise<Result<null>>;
     validateGame(): Promise<Result<string[]>>;
+    getGameHistory(page: number, pageSize: number): Promise<Result<GameSummaryPayload>>;
 
     sendError(message: string): Promise<Result<null>>;
 }
